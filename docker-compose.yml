@@ -1,0 +1,43 @@
+version: "3.9"
+
+services:
+  jenkins:
+    build:
+      context: ./docker-context/jenkins
+    restart:
+      on-failure
+    privileged: true
+    ports:
+      - "2376:2376"
+      - "9080:8080"
+      - "50000:50000"
+    volumes:
+      - jenkins-docker-certs:/certs/client
+      - jenkins-data:/var/jenkins_home
+    environment:
+      - DOCKER_TLS_CERTDIR="/certs"
+      - DOCKER_HOST=tcp://jenkins:2376
+      - DOCKER_CERT_PATH=/certs/client
+      - DOCKER_TLS_VERIFY=1
+    networks:
+      - WH-network    
+
+  tomcat:
+    build: 
+      context: ./docker-context/tomcat
+    restart:
+      on-failure
+    privileged: true
+    ports:
+      - "8088:8080"
+    volumes:
+      - ${WORKDIR}/docker-context/tomcat/webapps:/usr/local/tomcat/webapps
+    networks:
+      - WH-network
+
+networks:
+  WH-network:
+
+volumes:
+  jenkins-docker-certs:
+  jenkins-data:
