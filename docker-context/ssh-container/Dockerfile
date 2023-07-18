@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 
 RUN apt-get update && \
-    apt-get -y install openssh-server openssh-client init docker.io  apt-transport-https ca-certificates curl gnupg lsb-release iptables
+    apt-get -y install openssh-server openssh-client init docker.io  apt-transport-https ca-certificates curl gnupg lsb-release iptables vim
 
 # ssh setting
 RUN sed 's/#PermitRootLogin yes/PermitRootLogin yes/' -i /etc/ssh/sshd_config &&\
