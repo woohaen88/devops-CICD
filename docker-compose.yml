@@ -4,8 +4,7 @@ services:
   jenkins:
     build:
       context: ./docker-context/jenkins
-    restart:
-      on-failure
+    restart: on-failure
     privileged: true
     ports:
       - "2376:2376"
@@ -20,18 +19,28 @@ services:
       - DOCKER_CERT_PATH=/certs/client
       - DOCKER_TLS_VERIFY=1
     networks:
-      - WH-network    
+      - WH-network
 
   tomcat:
-    build: 
+    build:
       context: ./docker-context/tomcat
-    restart:
-      on-failure
+    restart: on-failure
     privileged: true
     ports:
       - "8088:8080"
     volumes:
       - ${WORKDIR}/docker-context/tomcat/webapps:/usr/local/tomcat/webapps
+    networks:
+      - WH-network
+
+  ssh-container:
+    build:
+      context: ./docker-context/ssh-container
+
+    restart: on-failure
+    privileged: true
+    ports:
+      - "10022:22"
     networks:
       - WH-network
 
