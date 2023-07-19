@@ -36,11 +36,12 @@ services:
   ssh-container:
     build:
       context: ./docker-context/ssh-container
-
+    working_dir: /root
     restart: on-failure
     privileged: true
     ports:
       - "10022:22"
+      - "8081:8080"
     networks:
       - WH-network
 
