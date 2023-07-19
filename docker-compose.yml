@@ -45,6 +45,18 @@ services:
     networks:
       - WH-network
 
+  ansible:
+    build: 
+      context: ./docker-context/ansible
+    restart: on-failure
+    privileged: true
+    command: /sbin/init
+    ports:
+      - "8888:8080"
+      - "20022:22"
+    networks:
+      - WH-network
+
 networks:
   WH-network:
 
