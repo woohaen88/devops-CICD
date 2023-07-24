@@ -28,3 +28,21 @@ RUN update-alternatives --set iptables /usr/sbin/iptables-legacy && \
 
 RUN curl -L https://bootstrap.pypa.io/get-pip.py | python3 && \
     python3 -m pip install ansible
+
+
+RUN mkdir -p /etc/ansible && \
+    echo "[devops]\nansible\nssh-container" >> /etc/ansible/hosts
+
+# ---
+# - hosts: all
+
+#   tasks:
+#     - name: build a docker image with deployed war file
+#       command: docker build -t cicd-projet-ansible .
+#       args:
+#         chdir: /root
+#     - name: create a container using cicd-project-ansible image
+#       command: docker run -d --name my_cicd_project -p 8080:8080 cicd-project-ansible
+
+WORKDIR /root
+RUN echo "FROM tomcat:9.0\nCOPY ./hello-world.war /usr/local/tomcat/webapps\nWORKDIR /root" > /root/Dockerfile
