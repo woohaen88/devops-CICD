@@ -44,6 +44,8 @@ services:
       - "8081:8080"
     networks:
       - WH-network
+    volumes:
+      - "${WORKDIR}/docker-context/ssh-container/volumes:/volumes"
 
   ansible:
     build: 
@@ -56,6 +58,10 @@ services:
       - "20022:22"
     networks:
       - WH-network
+    volumes:
+      - "${WORKDIR}/docker-context/ansible/volumes:/volumes"
+
+
 
 networks:
   WH-network:
